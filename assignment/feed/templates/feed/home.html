@@ -1,0 +1,75 @@
+{% extends 'feed/base.html' %}
+
+{%block content%}
+    <br><br>
+    <div class="container" style="background-color: rgb(168, 179, 175);">
+        <div class="jumbotron" >
+            <h1 class="display-4">Hello, {{user.username}}!</h1>
+            <p class="lead">This is a Blog Page!!</p>
+            <hr class="my-4">
+            <p>Click below to create a blog</p>
+            <p class="lead">
+            <a class="btn btn-primary btn-lg" href="{% url 'blogcreate' %}" role="button">Create</a>
+            </p>
+            <br>
+        </div>
+    </div>
+    <br><br>
+    <div class="container">
+        {% for blog in object_list %}
+
+            <div class="card">
+                <div class="card-header">
+                    <a href="{% url 'profile' %}" style="text-decoration:none"><h4>{{blog.usrName}}</h4></a>
+                    <p>{{blog.dateTime}}</p>
+                </div>
+                <div class="card-body">
+                    <p class="card-text"><h5>{{blog.content}}</h5></p>
+                    {% if blog.usrName == user %}
+                        <a href="{% url 'blogupdate' blog.id %}"><button class="btn btn-outline-info">Update</button></a>
+                        <a href="{% url 'blogdelete' blog.id %}"><button class="btn btn-outline-danger">Delete</button></a>
+                        <form action="/comment-share/{{blog.id}}" class="post-form" method="post">
+                            {%csrf_token%}
+                          <label for="team_name">Enter email: </label>
+                          <input
+                            id="email"
+                            type="text"
+                            name="email_field"
+                            value="" />
+                          <input type="submit" value="OK" />
+                        </form>
+
+                    {% endif %}
+                </div>
+                 <div class="card-header">
+                        <h5>Comments</h5>
+                        <a class="btn btn-primary btn-lg" href="{% url 'commentcreate' blog.pk %}" role="button">Comment</a>
+                 </div>
+                <div class="card-body">
+                    {% if blog.comment_set.all %}
+                         {% for comment in blog.comment_set.all %}
+                            <p>{{comment.comment}}</p>
+                            <a href="{% url 'commentupdate' comment.id %}"><button class="btn btn-outline-info">Like {{comment.like}}</button></a>
+                         {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <br>
+        {% endfor %}
+        {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="/?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="/?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    {% endif %}
+    </div>
+{%endblock content%}

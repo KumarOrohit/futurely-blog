@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
+    <title>Blog</title>
+</head>
+<body>
+
+    <br><br><br><br>
+    <h2 style="color: cadetblue;text-align: center;">Blog</h2>
+    <br><br>
+    <div class="container">
+
+        <form method="POST">
+
+            {%csrf_token%}
+
+            <fieldset class="form-group">
+
+                <legend class="border-bottom mb-4"> Login</legend>
+                <br>
+                <br>
+                {{form.as_p}}
+
+            </fieldset>
+            <br>
+            <div class= "form-group">
+                <button class="btn btn-outline-info" type="submit">Login</button>
+            </div>
+            <br>
+            <a href="{% url 'register' %}"><p>Create a new account</p></a>
+
+        </form>
+
+
+    </div>
+    {%if messages%}
+        {%for message in messages%}
+            <div class="alert alert-success" role="alert">
+                {{message}}
+            </div>
+        {%endfor%}
+    {%endif%}
+
+</body>
+</html>

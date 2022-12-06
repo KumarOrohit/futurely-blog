@@ -1,0 +1,10 @@
+<nav class="navbar nav-expand-md navbar-dark bg-dark">
+  <!-- Navbar content -->
+
+    <a class="nav-link" href="{% url 'home' %}" style="color: aliceblue;">Home</a>
+    <a class="nav-brand" href="{% url 'profile' %} ">
+        <img class="rounded-circle account-img img-fluid" src = "{{user.profile.image.url}}" width="50" height="50" alt="Generic placeholder image">
+    </a>
+    <a class="nav-link" href="{% url 'logout' %}" style="color: aliceblue;">LogOut</a>
+
+</nav>
