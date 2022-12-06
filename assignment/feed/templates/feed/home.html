@@ -25,20 +25,19 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text"><h5>{{blog.content}}</h5></p>
+                    <form action="/comment-share/{{blog.id}}" class="post-form" method="post">
+                        {%csrf_token%}
+                      <label for="team_name">Enter email: </label>
+                      <input
+                        id="email"
+                        type="text"
+                        name="email_field"
+                        value="" />
+                      <input type="submit" value="OK" />
+                    </form>
                     {% if blog.usrName == user %}
                         <a href="{% url 'blogupdate' blog.id %}"><button class="btn btn-outline-info">Update</button></a>
                         <a href="{% url 'blogdelete' blog.id %}"><button class="btn btn-outline-danger">Delete</button></a>
-                        <form action="/comment-share/{{blog.id}}" class="post-form" method="post">
-                            {%csrf_token%}
-                          <label for="team_name">Enter email: </label>
-                          <input
-                            id="email"
-                            type="text"
-                            name="email_field"
-                            value="" />
-                          <input type="submit" value="OK" />
-                        </form>
-
                     {% endif %}
                 </div>
                  <div class="card-header">
